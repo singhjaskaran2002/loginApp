@@ -1,0 +1,25 @@
+<h1 style="margin-top:-120px;margin-left:300px;">Login Form</h1><br><br><br>
+
+<div *ngIf="invalidCred" class="text-danger" style="text-align:center;font-size:20px;">Invalid email and password</div>
+
+<div style="padding:0 300px;">
+
+  <form [formGroup]="form" autocomplete="off" (ngSubmit)="loginUser()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" class="form-control" type="email" [(ngModel)]="user.email" formControlName="email">
+      <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger">Please enter email</div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" class="form-control" type="password" [(ngModel)]="user.password" formControlName="password">
+      <div *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="text-danger">Please enter password</div>
+    </div>
+    <br><br>
+    <div class="form-group">
+      <button type="submit" style="width:100px;" class="btn btn-primary"> Login </button>
+    </div>
+  </form>
+
+</div>
