@@ -1,4 +1,7 @@
+import { LoginService } from './login.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  user: any = {};
+  public form: FormGroup;
+  invalidCred = false;
+
+  constructor(
+    private loginService: LoginService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {
+    this.form = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+
+    this.user = { email: '', password: '' }
+  }
 
   ngOnInit() {
+  }
+
+  loginUser() {
+    console.log('loginUser function from login component');
+    if (this.form.valid) {
+      this.loginService.login(this.user).subscribe(res => {
+        if (res.status === 'true') {
+          this.router.navigateByUrl('/post');
+          this.invalidCred = false;
+          this.loginService.isAuthenticated = true;
+        } else if (res.status === 'false') {
+          this.invalidCred = true;
+          this.loginService.isAuthenticated = false;
+        }
+      });
+    } else {
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.controls[key].markAsTouched({ onlySelf: true });
+      });
+    }
   }
 
 }

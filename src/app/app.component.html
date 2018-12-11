@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="navbar-expand ml-auto navbar-nav">
-      <div class="navbar-nav">
+      <div *ngIf="!loggedIn" class="navbar-nav">
         <a class="nav-link" [routerLink]="['/login']"><i class="fa fa-lock"></i> Login </a>
         <a class="nav-link" [routerLink]="['/register']"><i class="fa fa-user"></i> Sign up </a>
       </div>
