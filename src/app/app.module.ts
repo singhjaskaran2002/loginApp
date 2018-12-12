@@ -6,16 +6,17 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { HomepageComponent } from './homepage/homepage.component';
 import { PostComponent } from './post/post.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuardService as AuthGuard } from './services/authGuard.service';
+import { FrontPageComponent } from './front-page/front-page.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', component: HomepageComponent },
-  { path: 'post', component: PostComponent }
+  { path: '', component: FrontPageComponent },
+  { path: 'post', component: PostComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -23,8 +24,8 @@ const appRoutes: Routes = [
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    HomepageComponent,
-    PostComponent
+    PostComponent,
+    FrontPageComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [LoginService, RegisterService],
+  providers: [LoginService, RegisterService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

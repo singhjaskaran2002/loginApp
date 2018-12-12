@@ -1,29 +1,52 @@
-<h2 style="margin-top:-120px;margin-left:300px;">Register Form</h2><br>
-<div style="padding:0 300px;">
-  <form autocomplete="off" [formGroup]="form" (ngSubmit)="registerUser()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" class="form-control" type="email" [(ngModel)]="user.email" formControlName="email">
-    </div>
+<div class="container" style="width:600px;height:550px;margin-top:50px;">
+  <div class="card" style="box-shadow:10px 15px 10px black;">
+    <div class="card-header"><span style="font-weight:bold;font-size: 25px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Register
+        Form</span></div>
+    <div class="card-body">
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" class="form-control" type="password" [(ngModel)]="user.password" formControlName="password">
-    </div>
+      <div *ngIf="isRegisterError" class="text-danger" style="text-align:center;font-size:20px;">Not Registered, Please
+        try
+        again after some time</div>
 
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" class="form-control" type="text" [(ngModel)]="user.name" formControlName="name">
-    </div>
+      <form autocomplete="off" [formGroup]="form" (ngSubmit)="registerUser()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" class="form-control" type="email" [(ngModel)]="user.email" formControlName="email" (keyup)="removeMsg($event)" (keydown)="removeMsg($event)">
+          <div *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="text-danger">Please
+            enter email</div>
+          <div *ngIf="form.controls['email'].hasError('pattern') && form.controls['email'].touched" class="text-danger">Please
+            enter valid email</div>
+          <div *ngIf="emailTaken" class="text-danger">Email already taken</div>
+        </div>
 
-    <div class="form-group">
-      <label for="city">City</label>
-      <input id="city" class="form-control" type="text" [(ngModel)]="user.city" formControlName="city">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" class="form-control" type="password" [(ngModel)]="user.password" formControlName="password">
+          <div *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="text-danger">Please
+            enter password</div>
+          <div *ngIf="form.controls['password'].hasError('minlength') && form.controls['password'].touched" class="text-danger">Passowrd
+            must be of 8 characters</div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" class="form-control" type="text" [(ngModel)]="user.name" formControlName="name">
+          <div *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="text-danger">Please
+            enter name</div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" class="form-control" type="text" [(ngModel)]="user.city" formControlName="city">
+          <div *ngIf="form.controls['city'].hasError('required') && form.controls['city'].touched" class="text-danger">Please
+            enter city</div>
+        </div>
+        <br><br>
+        <div class="form-group">
+          <button type="button" class="btn btn-warning" (click)="cancelRegister()"> Cancel </button>&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary"> Register </button>
+        </div>
+      </form>
     </div>
-    <br><br>
-    <div class="form-group">
-      <button type="button" class="btn btn-warning"> Cancel </button>&nbsp;&nbsp;
-      <button type="submit" class="btn btn-primary"> Register </button>
-    </div>
-  </form>
+  </div>
 </div>

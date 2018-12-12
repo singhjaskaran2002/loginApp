@@ -1,3 +1,33 @@
-<div style="text-align: center">
-    <h1>This is Restricted Page</h1>
+<button style="float:right;margin:20px;" class="btn btn-sm" (click)="logout()"><i class="fa fa-sign-out"></i> Logout
+</button><br>
+
+<div style="text-align: center;margin:50px;">
+    <div class="container">
+        <div class="card" style="width:900px;">
+            <div class="card-header"><b style="font-size:20px;">User Info</b></div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead style="background-color:aqua;">
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of users">
+                            <td> {{ i.email }} </td>
+                            <td> {{ i.name }} </td>
+                            <td> {{ i.city }} </td>
+                            <td>
+                                <button class="btn btn-info btn-sm"> Edit </button>
+                                <button class="btn btn-waring btn-sm"> Delete </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>

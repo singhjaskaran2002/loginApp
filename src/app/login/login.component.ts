@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   user: any = {};
   public form: FormGroup;
   invalidCred = false;
+  EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   constructor(
     private loginService: LoginService,
@@ -20,27 +21,25 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEX)])],
       password: ['', Validators.required]
-    })
+    });
 
-    this.user = { email: '', password: '' }
+    this.user = { email: '', password: '' };
   }
 
   ngOnInit() {
   }
 
   loginUser() {
-    console.log('loginUser function from login component');
     if (this.form.valid) {
       this.loginService.login(this.user).subscribe(res => {
         if (res.status === 'true') {
+          localStorage.setItem('accessToken', res.accessToken);
           this.router.navigateByUrl('/post');
           this.invalidCred = false;
-          this.loginService.isAuthenticated = true;
         } else if (res.status === 'false') {
           this.invalidCred = true;
-          this.loginService.isAuthenticated = false;
         }
       });
     } else {

@@ -1,3 +1,4 @@
+import { PostService } from './post.service';
 import { Router } from '@angular/router';
 import { LoginService } from './../login/login.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,15 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostComponent implements OnInit {
 
+  users = {};
+
   constructor(
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private postService: PostService
   ) { }
 
   ngOnInit() {
-    // if (!this.loginService.isAuthenticated) {
-    //   this.router.navigateByUrl('/login');
-    // }
+    this.getUsers();
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigateByUrl('/');
+  }
+
+  getUsers() {
+    this.postService.get().subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

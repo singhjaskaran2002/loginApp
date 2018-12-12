@@ -11,7 +11,6 @@ export class LoginService {
   constructor(private http: HttpClient) { } 
 
   login(user) {
-    console.log('login function from login service');
     return this.http.post<any>('http://localhost:8081/login', user);
   }
 }
