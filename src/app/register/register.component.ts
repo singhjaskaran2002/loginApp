@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { RegisterService } from './register.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,13 +15,11 @@ export class RegisterComponent implements OnInit {
   public form: FormGroup;
   EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  isRegisterError = false;
-  emailTaken = false;
-
   constructor(
     private registerService: RegisterService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.form = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.pattern(this.EMAIL_REGEX)])],
@@ -35,20 +34,28 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  removeMsg(event) {
-    this.emailTaken = false;
+  showEmailTaken() {
+    this.toastr.warning('Email already taken');
+  }
+
+  showSucess() {
+    this.toastr.success('Registered Successfully', '');
+  }
+
+  showError() {
+    this.toastr.error('Server down, please try again later', '');
   }
 
   registerUser() {
     if (this.form.valid) {
       this.registerService.register(this.user).subscribe(res => {
         if (res.status === 'taken') {
-          this.emailTaken = true;
+          this.showEmailTaken();
         } else if (res.status === 'true') {
-          this.isRegisterError = false;
+          this.showSucess();
           this.router.navigateByUrl('/');
         } else if (res.status === 'false') {
-          this.isRegisterError = true;
+          this.showError();
         }
       });
     } else {

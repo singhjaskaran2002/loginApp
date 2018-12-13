@@ -9,7 +9,7 @@ export class PostService {
   constructor(private http: HttpClient) { }
 
   get() {
-    return this.http.get<any>("http://localhost:8081/get");
+    return this.http.get<any>('http://localhost:8081/get');
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, CanDeactivate } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 export interface CanComponentDeactivate {
     canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
@@ -9,7 +10,10 @@ export interface CanComponentDeactivate {
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanDeactivate<CanComponentDeactivate> {
-    constructor(public router: Router) {
+    constructor(
+        public router: Router,
+        private toastr: ToastrService
+    ) {
     }
 
     canActivate(): boolean {
@@ -24,11 +28,16 @@ export class AuthGuardService implements CanActivate, CanDeactivate<CanComponent
         return component.canDeactivate ? component.canDeactivate() : true;
     }
 
+    loginBeforeProceed() {
+        this.toastr.warning('Please login to redirect to this page');
+    }
+
     isAuthenticated(): boolean {
         const token = localStorage.getItem('accessToken');
         if (token) {
             return true;
         } else {
+            this.loginBeforeProceed();
             return false;
         }
     }
