@@ -15,12 +15,15 @@ import { FrontPageComponent } from './front-page/front-page.component';
 import { ToastrModule } from "ngx-toastr";
 import { PasswordComponent } from './password/password.component';
 import { PasswordService } from './password/password.service';
+import { ContactComponent } from './contact/contact.component';
+import { ContactService } from './contact/contact.service';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', component: FrontPageComponent },
   { path: 'update/password', component: PasswordComponent },
+  { path: 'connect', component: ContactComponent },
   { path: 'post', component: PostComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] }
 ];
 
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     LoginComponent,
     PostComponent,
     FrontPageComponent,
-    PasswordComponent
+    PasswordComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,7 @@ const appRoutes: Routes = [
     }),
     BrowserAnimationsModule
   ],
-  providers: [LoginService, RegisterService, AuthGuard, PasswordService],
+  providers: [LoginService, RegisterService, AuthGuard, PasswordService, ContactService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

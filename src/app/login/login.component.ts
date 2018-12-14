@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
   loginUser() {
     if (this.form.valid) {
       this.loginService.login(this.user).subscribe(res => {
+        console.log(res.accessToken);
         if (res.status === 'true') {
           this.showSucess();
           localStorage.setItem('loggedEmail', this.user.email);
