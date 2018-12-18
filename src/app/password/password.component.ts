@@ -33,31 +33,26 @@ export class PasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.password.email = localStorage.getItem('loggedEmail');
-  }
-
-  notMatchToastr() {
-    this.toastr.error('Current password not matched, please try again');
-  }
-
-  notUpdatedToastr() {
-    this.toastr.error('Server down, please try again after some time');
-  }
-
-  updatedToastr() {
-    this.toastr.success('Password updated successfully');
+    var token = localStorage.getItem('accessToken');
+    if (token) {
+      var tokenData = token.split('.');
+      var payload = JSON.parse(atob(tokenData[1]));
+      this.password.email = payload.user[0].email;
+    }
   }
 
   updateUser() {
     if (this.form.valid) {
       this.passwordService.update(this.password).subscribe(res => {
-        if (res.status === 'notMatch') {
-          this.notMatchToastr();
-        } else if (res.status === 'true') {
-          this.updatedToastr();
+        if (res.status === 'samePass') {
+          this.toastr.error('Please use different password from current password');
+        } else if (res.status === '401') {
+          this.toastr.error('Current password not matched, please try again');
+        } else if (res.status === '200') {
+          this.toastr.success('Password updated successfully');
           this.router.navigateByUrl('/post');
-        } else if (res.status === 'false') {
-          this.notUpdatedToastr();
+        } else {
+          this.toastr.error('Server down, please try again after some time');
         }
       });
     } else {

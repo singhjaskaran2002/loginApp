@@ -11,6 +11,6 @@ export class RegisterService {
   ) { }
 
   register(user) {
-    return this.http.post<any>('http://localhost:8081/register', user);
+    return this.http.post<any>('http://localhost:8081/user/register', user);
   }
 }

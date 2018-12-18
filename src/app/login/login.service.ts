@@ -11,6 +11,6 @@ export class LoginService {
   constructor(private http: HttpClient) { } 
 
   login(user) {
-    return this.http.post<any>('http://localhost:8081/login', user);
+    return this.http.post<any>('http://localhost:8081/user/login', user);
   }
 }

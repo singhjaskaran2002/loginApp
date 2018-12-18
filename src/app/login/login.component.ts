@@ -29,28 +29,20 @@ export class LoginComponent implements OnInit {
     this.user = { email: '', password: '' };
   }
 
-  showSucess() {
-    this.toastr.success('Welcome', '');
-  }
-
-  showError() {
-    this.toastr.error('Invalid email and password', '');
-  }
-
   ngOnInit() {
   }
 
   loginUser() {
     if (this.form.valid) {
       this.loginService.login(this.user).subscribe(res => {
-        console.log(res.accessToken);
-        if (res.status === 'true') {
-          this.showSucess();
-          localStorage.setItem('loggedEmail', this.user.email);
-          localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('accessToken', res.accessToken);
+        console.log(res);
+
+        if (res.status === '200') {
           this.router.navigateByUrl('/post');
-        } else if (res.status === 'false') {
-          this.showError();
+          this.toastr.success('Welcome');
+        } else if (res.status === '404') {
+          this.toastr.error('Invalid email and password');
         }
       });
     } else {

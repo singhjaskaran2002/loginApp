@@ -1,0 +1,43 @@
+<div style="padding: 50px;margin:50px;border:1px solid black;">
+    <h1 style="background-color: aqua">Real time Chat Application</h1>
+    <hr>
+    <form>
+      <div class="row">
+        <div class="col-sm-5">
+          <input class="form-control" style="width:300px;" type="text" name="username" [(ngModel)]="username" placeholder="Username">
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control" [(ngModel)]="room" name="room">
+            <option value="Room 1"> Room 1 </option>
+            <option value="Room 2"> Room 2 </option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-primary btn-sm" (click)="join()"> Join </button> | <button class="btn btn-sm pull-right" (click)="leave()">
+            Leave
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="row" style="margin-right:20px;margin-left:0;">
+        <div style="width:650px;height:200px;background-color:powderblue;min-height:200px;overflow:scroll;" class="col-sm-10" #chatDiv>
+          <div *ngFor="let msg of messageArray">
+            <span> <strong>{{ msg.username }} </strong>: {{ msg.message }} </span><br>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-9">
+          <input type="text" id="message" name="message" class="form-control" [(ngModel)]="message" placeholder="message">
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-primary btn-sm" (click)="send()"> Send </button>
+        </div>
+  
+  
+      </div>
+  
+  
+    </form>
+  </div>

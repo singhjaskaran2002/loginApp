@@ -34,28 +34,17 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  showEmailTaken() {
-    this.toastr.warning('Email already taken');
-  }
-
-  showSucess() {
-    this.toastr.success('Registered Successfully', '');
-  }
-
-  showError() {
-    this.toastr.error('Server down, please try again later', '');
-  }
-
   registerUser() {
     if (this.form.valid) {
       this.registerService.register(this.user).subscribe(res => {
-        if (res.status === 'taken') {
-          this.showEmailTaken();
-        } else if (res.status === 'true') {
-          this.showSucess();
+        console.log('database res: ', JSON.stringify(res));
+        if (res.status === 'true') {
+          this.toastr.success('Registered Succesfully');
           this.router.navigateByUrl('/');
-        } else if (res.status === 'false') {
-          this.showError();
+        } else if (res.status === 'taken') {
+          this.toastr.warning('Email already taken');
+        } else {
+          this.toastr.error('Server down, please try again later');
         }
       });
     } else {

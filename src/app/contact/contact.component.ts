@@ -31,7 +31,13 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mail.from = localStorage.getItem('loggedEmail');
+    var token = localStorage.getItem('accessToken');
+    if (token) {
+      var tokenData = token.split('.');
+      var payload = JSON.parse(atob(tokenData[1]));
+      this.mail.from = payload.user[0].email;
+      this.mail.to = localStorage.getItem('recepient');
+    }
   }
 
   cancel() {
@@ -45,10 +51,10 @@ export class ContactComponent implements OnInit {
 
   sendMail() {
     this.contactService.sendMessage(this.mail).subscribe(res => {
-      console.log(res);
       if (res.status === 'true') {
         this.toastr.success('Mail sent successfully');
         this.mail = {};
+        localStorage.removeItem('recepient');
         this.router.navigateByUrl('/post');
       } else if (res.status === 'false') {
         this.toastr.error('Server down, please try again later');

@@ -11,6 +11,6 @@ export class PasswordService {
   ) { }
 
   update(password) {
-    return this.http.post<any>('http://localhost:8081/update/password', password);
+    return this.http.post<any>('http://localhost:8081/user/update/password', password);
   }
 }

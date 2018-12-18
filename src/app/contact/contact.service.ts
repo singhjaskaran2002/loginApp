@@ -10,8 +10,8 @@ export class ContactService {
     private http: HttpClient
   ) { }
 
-    sendMessage(mail) {
-      return this.http.post<any>('http://localhost:8081/send/email', mail);
+    sendMessage(email) {
+      return this.http.post<any>('http://localhost:8081/user/send/email', email);
     }
 
 }

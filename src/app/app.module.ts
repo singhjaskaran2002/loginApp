@@ -17,6 +17,8 @@ import { PasswordComponent } from './password/password.component';
 import { PasswordService } from './password/password.service';
 import { ContactComponent } from './contact/contact.component';
 import { ContactService } from './contact/contact.service';
+import { ChatComponent } from './chat/chat.component';
+import { ChatService } from './chat/chat.service';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     PostComponent,
     FrontPageComponent,
     PasswordComponent,
-    ContactComponent
+    ContactComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,7 @@ const appRoutes: Routes = [
     }),
     BrowserAnimationsModule
   ],
-  providers: [LoginService, RegisterService, AuthGuard, PasswordService, ContactService],
+  providers: [LoginService, RegisterService, AuthGuard, PasswordService, ContactService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
