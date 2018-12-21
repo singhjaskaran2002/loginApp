@@ -1,7 +1,7 @@
-<div class="card" style="margin:30px;">
-  <div class="card-header" style="text-align: center;">
-    <h2>Chat</h2>
-    <span>{{chatRecepient}}</span>
+<div style="width: 50%; margin: 0 auto;">
+<div class="card" style="width:600px;margin:30px;">
+  <div class="card-header" style="background-color:cyan">
+    <span><b>{{chatRecepient}}</b></span>
   </div>
   <div class="card-body">
     <form autocomplete="off" [formGroup]="form">
@@ -9,7 +9,8 @@
         <div style="height:400px;background-color:powderblue;padding:20px;min-height:200px;overflow:scroll;" class="col-sm-12"
           #chatDiv>
           <div *ngFor="let msg of messageArray">
-            <span class="senderClass" class="messageClass"> <strong>{{ msg.sender }} </strong>: {{ msg.message }} </span><br><br>
+            <span class="senderClass" *ngIf="msg.sender === chatSender"> <strong>{{ msg.sender }}:</strong> {{ msg.message }} </span><br>
+            <span class="receiverClass" *ngIf="msg.receiver === chatSender"> <strong>{{ msg.sender }}:</strong> {{ msg.message }} </span><br>
           </div>
         </div>
       </div>
@@ -17,12 +18,13 @@
       <div class="row">
         <div class="col-sm-11">
           <input id="messageBox" formControlName="message" class="form-control" type="text" name="message" [(ngModel)]="message" placeholder="Message">
-          <span *ngIf="form.controls['message'].hasError('required')" class="text-danger">please enter message</span>
+          <span *ngIf="form.controls['message'].hasError('required') && form.controls['message'].touched" class="text-danger">please enter message</span>
         </div>
         <div class="col-sm-1">
-          <button class="btn btn-primary btn-sm" style="float:right;" (click)="sendMessage()"> Send </button>
+          <button class="btn btn-primary" style="float:right;" (click)="sendMessage()"> <span class="fa fa-paper-plane"></span> </button>
         </div>
       </div>
     </form>
   </div>
+</div>
 </div>

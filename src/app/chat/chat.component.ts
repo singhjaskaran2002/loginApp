@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('chatDiv') private myScrollContainer: ElementRef<any>
 
+  senderClass: boolean;
   chatRecepient: string;
   messageArray: Array<{ sender: string, receiver: string, message: string }> = [];
   chatSender: string;
@@ -36,6 +37,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.chatService.newMessage().subscribe(data => {
       this.messageArray.push(data);
+      this.message = '';
     });
   }
 
@@ -53,7 +55,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     if (this.form.valid) {
       var data = { sender: this.chatSender, receiver: this.chatRecepient, message: this.message };
       this.chatService.send(data);
-      // this.message = '';
       document.getElementById("messageBox").focus();
     } else {
       Object.keys(this.form.controls).forEach(key => {

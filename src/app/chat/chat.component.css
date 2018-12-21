@@ -1,4 +1,12 @@
-.messageClass {
+.receiverClass {
+    float: left;
+    padding:5px;
+    background-color:lightcyan;
+    border-radius:10px;
+}
+
+.senderClass {
+    float: right;
     padding:5px;
     background-color:lightcyan;
     border-radius:10px;
