@@ -35,10 +35,9 @@ export class LoginComponent implements OnInit {
   loginUser() {
     if (this.form.valid) {
       this.loginService.login(this.user).subscribe(res => {
-        localStorage.setItem('accessToken', res.accessToken);
-        console.log(res);
-
         if (res.status === '200') {
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('loggedEmail', this.user.email);
           this.router.navigateByUrl('/post');
           this.toastr.success('Welcome');
         } else if (res.status === '404') {

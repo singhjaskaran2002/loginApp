@@ -11,7 +11,7 @@ export class ContactService {
   ) { }
 
     sendMessage(email) {
-      return this.http.post<any>('http://localhost:8081/user/send/email', email);
+      return this.http.post<any>('http://192.168.1.66:8081/user/send/email', email);
     }
 
 }

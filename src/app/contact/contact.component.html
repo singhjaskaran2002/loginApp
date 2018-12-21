@@ -3,18 +3,19 @@
     <div class="card-header" style="text-align: center;font-weight: bold;font-size: 20px;background-color: powderblue;">
       Connect </div>
     <div class="card-body">
-      {{ focusOn }}
       <form [formGroup]="form" autocomplete="off" (ngSubmit)="connect()">
         <div class="form-group">
-          <input type="email" placeholder="Enter recepient" formControlName="to" [(ngModel)]="mail.to">
-          <div class="text-danger" *ngIf="form.controls['to'].hasError('required') && form.controls['to'].touched" style="font-size:15px;">
+          <input style="padding:10px;" type="email" placeholder="Enter recepient" formControlName="to" [(ngModel)]="mail.to">
+          <div class="text-danger" *ngIf="form.controls['to'].hasError('required') && form.controls['to'].touched"
+            style="font-size:15px;">
             Please enter recepient address
           </div>
         </div>
 
+        <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"></ngx-spinner>
+
         <div class="form-group">
-          <input type="text" id="subject" placeholder="Subject" formControlName="subject" ng-focus="focusOn"
-            [(ngModel)]="mail.subject">
+          <input type="text" id="subject" placeholder="Subject" formControlName="subject" [(ngModel)]="mail.subject">
         </div>
 
         <div class="form-group">
@@ -26,7 +27,7 @@
 
         <div class="card-footer">
           <div class="form-group" style="padding:20px 0 0 0;">
-            <button type="submit" class="btn btn-sm" (click)="cancel()"> Cancel </button> |
+            <button type="button" class="btn btn-sm" (click)="cancel()"> Cancel </button> |
             <button type="reset" class="btn btn-warning btn-sm"> Reset </button> |
             <button type="submit" class="btn btn-primary btn-sm"> Submit </button>
           </div>

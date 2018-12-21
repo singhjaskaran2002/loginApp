@@ -8,20 +8,20 @@ import { Router } from '@angular/router';
 })
 export class PostService {
 
-  auth_token = 'Bearer '+localStorage.getItem('accessToken');
-
   constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
 
   query() {
-    return this.http.get<any>('http://localhost:8081/user/list');
+    return this.http.get<any>('http://192.168.1.66:8081/user/list');
   }
 
   protectedRoute() {
-    return this.http.get<any>('http://localhost:8081/route/protected', { headers: new HttpHeaders().set('Authorization', this.auth_token) });
+    var auth_Token = 'Bearer ' + localStorage.getItem('accessToken');
+    return this.http.get<any>('http://192.168.1.66:8081/protected/route', { headers: new HttpHeaders().set('Authorization', auth_Token) });
   }
 
   logout() {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('loggedEmail');
     this.router.navigateByUrl('/');
     this.toastr.success('You are successfully logged out');
   }

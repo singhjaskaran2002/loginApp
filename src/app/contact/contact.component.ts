@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ContactService } from './contact.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-contact',
@@ -19,7 +20,8 @@ export class ContactComponent implements OnInit {
     private contactService: ContactService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ngxSpinnerService: NgxSpinnerService
   ) {
     this.mail = { from: '', to: '', subject: '', message: '' }
 
@@ -50,6 +52,7 @@ export class ContactComponent implements OnInit {
   }
 
   sendMail() {
+    this.ngxSpinnerService.show();
     this.contactService.sendMessage(this.mail).subscribe(res => {
       if (res.status === 'true') {
         this.toastr.success('Mail sent successfully');
@@ -57,6 +60,7 @@ export class ContactComponent implements OnInit {
         localStorage.removeItem('recepient');
         this.router.navigateByUrl('/post');
       } else if (res.status === 'false') {
+        this.ngxSpinnerService.hide();
         this.toastr.error('Server down, please try again later');
       }
     });

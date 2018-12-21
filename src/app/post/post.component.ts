@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostComponent implements OnInit {
 
-  matchEmail:any;
+  matchEmail: any;
   users = [];
 
   constructor(
@@ -38,14 +38,26 @@ export class PostComponent implements OnInit {
   }
 
   checkAuthorization() {
-    console.log(localStorage.getItem('accessToken'));
     this.postService.protectedRoute().subscribe(res => {
-      this.toastr.success('you are authorized');
+      if (res.status === '401') {
+        this.toastr.error('You are not authorized');
+      } else if (res.status === '403') {
+        this.toastr.error('Server down');
+      } else {
+        this.toastr.success('You are authorized');
+      }
     });
   }
 
   logout() {
     this.postService.logout();
+    localStorage.removeItem('recepient');
+    localStorage.removeItem('chatRecepient');
+  }
+
+  chat(email) {
+    this.router.navigateByUrl('/chat');
+    localStorage.setItem('chatRecepient', email);
   }
 
   getUsers() {
@@ -54,7 +66,7 @@ export class PostComponent implements OnInit {
     });
   }
 
-  connect(email){
+  connect(email) {
     localStorage.setItem('recepient', email);
     this.router.navigateByUrl('/connect');
   }

@@ -1,7 +1,7 @@
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
-import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -19,15 +19,7 @@ import { ContactComponent } from './contact/contact.component';
 import { ContactService } from './contact/contact.service';
 import { ChatComponent } from './chat/chat.component';
 import { ChatService } from './chat/chat.service';
-
-const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: '', component: FrontPageComponent },
-  { path: 'update/password', component: PasswordComponent },
-  { path: 'connect', component: ContactComponent },
-  { path: 'post', component: PostComponent, canActivate: [AuthGuard], canDeactivate: [AuthGuard] }
-];
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -41,8 +33,10 @@ const appRoutes: Routes = [
     ChatComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    NgxSpinnerModule,
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
